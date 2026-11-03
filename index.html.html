@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sử Việt Hùng Cường - Nền Tảng Học & Tra Cứu Lịch Sử Việt Nam & Thế Giới</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: 'var(--brand-50, #fff1f2)',
+                            100: 'var(--brand-100, #ffe4e6)',
+                            200: 'var(--brand-200, #fecdd3)',
+                            500: 'var(--brand-500, #E31F26)', /* Màu chủ đạo có thể đổi */
+                            600: 'var(--brand-600, #c81219)',
+                            700: 'var(--brand-700, #a30c12)',
+                            800: 'var(--brand-800, #870e13)',
+                            900: 'var(--brand-900, #701014)',
+                        },
+                        gold: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Merriweather', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Định nghĩa biến CSS cho màu động */
+        :root {
+            --brand-50: #fff1f2;
+            --brand-100: #ffe4e6;
+            --brand-200: #fecdd3;
+            --brand-500: #E31F26;
+            --brand-600: #c81219;
+            --brand-700: #a30c12;
+            --brand-800: #870e13;
+            --brand-900: #701014;
+            --brand-gradient: linear-gradient(135deg, #E31F26 0%, #d97706 100%);
+        }
+
+        /* Dynamic Tailwind-like color helpers */
+        .bg-brand-500 { background-color: var(--brand-500) !important; }
+        .bg-brand-600 { background-color: var(--brand-600) !important; }
+        .bg-brand-700 { background-color: var(--brand-700) !important; }
+        .bg-brand-50 { background-color: var(--brand-50) !important; }
+        .text-brand-500 { color: var(--brand-500) !important; }
+        .text-brand-600 { color: var(--brand-600) !important; }
+        .text-brand-700 { color: var(--brand-700) !important; }
+        .border-brand-200 { border-color: var(--brand-200) !important; }
+        .border-brand-500 { border-color: var(--brand-500) !important; }
+
+        /* Tùy chỉnh thanh cuộn */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f8fafc;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--brand-500);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--brand-700);
+        }
+        
+        .brand-gradient-text {
+            background: var(--brand-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-glow {
+            box-shadow: 0 10px 30px -5px rgba(227, 31, 38, 0.25);
+        }
+
+        .history-pattern {
+            background-image: radial-gradient(rgba(227, 31, 38, 0.05) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+
+        /* CSS cho các nút tương tác đổi màu mượt mà */
+        .btn-theme-change {
+            transition: all 0.3s ease;
+        }
+        .btn-theme-change:hover {
+            filter: brightness(0.9);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-brand-500 selection:text-white min-h-screen flex flex-col justify-between">
+
+    <!-- FLOATING THEME COLOR PICKER TOOLBAR -->
+    <div class="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-white/95 backdrop-blur-md p-2.5 rounded-full shadow-2xl border border-slate-200/80">
+        <span class="text-xs font-bold text-slate-700 ml-2 hidden sm:inline"><i class="fa-solid fa-palette text-brand-500 mr-1"></i> Màu sắc:</span>
+        <div class="flex items-center gap-1.5">
+            <button onclick="changeTheme('red')" title="Đỏ Hùng Cường" class="w-7 h-7 rounded-full bg-[#E31F26] border-2 border-white shadow hover:scale-115 transition-transform"></button>
+            <button onclick="changeTheme('blue')" title="Xanh Lam Tri Thức" class="w-7 h-7 rounded-full bg-[#2563eb] border-2 border-white shadow hover:scale-115 transition-transform"></button>
+            <button onclick="changeTheme('emerald')" title="Xanh Ngọc Cổ Đại" class="w-7 h-7 rounded-full bg-[#059669] border-2 border-white shadow hover:scale-115 transition-transform"></button>
+            <button onclick="changeTheme('purple')" title="Tím Hoàng Gia" class="w-7 h-7 rounded-full bg-[#7c3aed] border-2 border-white shadow hover:scale-115 transition-transform"></button>
+            <button onclick="changeTheme('amber')" title="Vàng Hổ Phách" class="w-7 h-7 rounded-full bg-[#d97706] border-2 border-white shadow hover:scale-115 transition-transform"></button>
+            <button onclick="changeTheme('teal')" title="Xanh Thủy Chiến" class="w-7 h-7 rounded-full bg-[#0d9488] border-2 border-white shadow hover:scale-115 transition-transform"></button>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-white/95 border-b border-slate-200 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center text-white font-bold text-2xl shadow-md group-hover:scale-105 group-hover:rotate-3 transition-all duration-300">
+                    <i class="fa-solid font-serif">S</i>
+                </div>
+                <div>
+                    <span class="font-serif text-xl font-extrabold tracking-wider text-slate-900 block leading-none group-hover:text-brand-500 transition-colors">SỬ VIỆT HÙNG CƯỜNG</span>
+                    <span class="text-[10px] text-brand-600 tracking-widest uppercase font-bold">Tri Thức Nhân Loại & Dân Tộc</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden lg:flex items-center gap-6 text-sm font-semibold text-slate-700">
+                <a href="#hero" class="hover:text-brand-500 transition-colors duration-200 py-1">Trang Chủ</a>
+                <a href="#problems" class="hover:text-brand-500 transition-colors duration-200 py-1">Nỗi Đau</a>
+                <a href="#solutions" class="hover:text-brand-500 transition-colors duration-200 py-1">Giải Pháp</a>
+                <a href="#events" class="hover:text-brand-500 transition-colors duration-200 py-1">Sự Kiện</a>
+                <a href="#battles" class="hover:text-brand-500 transition-colors duration-200 py-1">Trận Chiến</a>
+                <a href="#timeline" class="hover:text-brand-500 transition-colors duration-200 py-1">Dòng Thời Gian</a>
+                <a href="#courses" class="hover:text-brand-500 transition-colors duration-200 py-1">Khóa Học</a>
+                <a href="#proof" class="hover:text-brand-500 transition-colors duration-200 py-1">Minh Chứng</a>
+                <a href="#faq" class="hover:text-brand-500 transition-colors duration-200 py-1">FAQ</a>
+            </nav>
+
+            <!-- Action Buttons -->
+            <div class="hidden sm:flex items-center gap-3">
+                <button onclick="openModal('searchModal')" class="p-2.5 rounded-xl bg-slate-100 text-slate-600 hover:text-brand-500 hover:bg-brand-50 transition-all duration-200" title="Tìm kiếm">
+                    <i class="fa-solid fa-magnifying-glass text-base"></i>
+                </button>
+                <a href="#courses" class="btn-theme-change px-5 py-2.5 rounded-xl bg-brand-500 text-white font-bold text-sm shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                    Học Ngay
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="menuBtn" class="lg:hidden p-2 text-slate-700 hover:text-brand-500 focus:outline-none transition-colors">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-6 space-y-3">
+            <a href="#hero" class="block py-2 text-slate-700 hover:text-brand-500 font-medium">Trang Chủ</a>
+            <a href="#problems" class="block py-2 text-slate-700 hover:text-brand-500 font-medium">Vấn Đề</a>
+            <a href="#solutions" class="block py-2 text-slate-700 hover:text-brand-500 font-medium">Giải Pháp</a>
+            <a href="#events" class="block py-2 text-slate-700 hover:text-brand-500 font-medium">Sự Kiện Lịch Sử</a>
+            <a href="#battles" class="block py-2 text-slate-700 hover:text-brand-500 font-medium">Trận Chiến Kinh Điển</a>
+            <a href="#timeline" class="block py-2 text-slate-700 hover:text-brand-500 font-medium">Dòng Thời Gian TCN/SCN</a>
+            <a href="#courses" class="block py-2 text-slate-700 hover:text-brand-500 font-medium">Khóa Học Phổ Biến</a>
+            <a href="#quiz" class="block py-2 text-slate-700 hover:text-brand-500 font-medium">Luyện Trắc Nghiệm</a>
+            <a href="#proof" class="block py-2 text-slate-700 hover:text-brand-500 font-medium">Minh Chứng & Đánh Giá</a>
+            <a href="#faq" class="block py-2 text-slate-700 hover:text-brand-500 font-medium">Hỏi Đáp FAQ</a>
+            <div class="pt-4 border-t border-slate-100 flex gap-2">
+                <button onclick="openModal('searchModal')" class="flex-1 py-2.5 rounded-xl bg-slate-100 text-slate-700 font-bold text-sm flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-magnifying-glass"></i> Tìm kiếm
+                </button>
+                <a href="#courses" class="btn-theme-change flex-1 text-center py-2.5 rounded-xl bg-brand-500 text-white font-bold text-sm shadow-md">Học Ngay</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 1. SECTION: HERO -->
+    <section id="hero" class="relative py-20 lg:py-28 overflow-hidden bg-white history-pattern">
+        <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-50 border border-brand-200 text-brand-600 text-xs sm:text-sm font-bold mb-8 shadow-sm">
+                <i class="fa-solid fa-fire text-brand-500 animate-pulse"></i> Nền Tảng Học & Trải Nghiệm Lịch Sử Trực Quan Hàng Đầu
+            </div>
+            
+            <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-tight max-w-5xl mx-auto mb-6">
+                Chấm Dứt Học Vẹt. <br>
+                <span class="brand-gradient-text">Sống Lại Những Trang Sử Hào Hùng!</span>
+            </h1>
+            
+            <p class="text-slate-600 text-base sm:text-xl max-w-3xl mx-auto mb-10 font-normal leading-relaxed">
+                Khám phá hàng ngàn năm lịch sử Việt Nam và các mốc văn minh thế giới Trước & Sau Công Nguyên qua sơ đồ trực quan, tư liệu khảo cổ chuẩn xác và góc nhìn chiến thuật quân sự sâu sắc.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#events" class="btn-theme-change w-full sm:w-auto px-8 py-4 rounded-xl bg-brand-500 text-white font-bold text-lg hover:shadow-xl flex items-center justify-center gap-3 group">
+                    <i class="fa-solid fa-compass group-hover:rotate-45 transition-transform duration-300"></i> Xem Sự Kiện Lịch Sử
+                </a>
+                <a href="#timeline" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-white border-2 border-slate-200 text-slate-800 font-bold text-lg hover:bg-slate-50 hover:border-brand-500 hover:text-brand-500 transition-all duration-300 flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-timeline text-brand-500"></i> Dòng Thời Gian TCN / SCN
+                </a>
+            </div>
+
+            <!-- Highlights Banner -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto mt-16 pt-10 border-t border-slate-100">
+                <div class="p-4 rounded-xl bg-white/60 border border-slate-100 shadow-sm hover:shadow-md hover:border-brand-200 transition-all">
+                    <div class="font-serif text-3xl font-extrabold text-brand-500 mb-1">5,000+</div>
+                    <div class="text-xs sm:text-sm text-slate-600 font-semibold">Năm Trước Công Nguyên</div>
+                </div>
+                <div class="p-4 rounded-xl bg-white/60 border border-slate-100 shadow-sm hover:shadow-md hover:border-brand-200 transition-all">
+                    <div class="font-serif text-3xl font-extrabold text-brand-500 mb-1">1,000+</div>
+                    <div class="text-xs sm:text-sm text-slate-600 font-semibold">Sự Kiện Lịch Sử Chi Tiết</div>
+                </div>
+                <div class="p-4 rounded-xl bg-white/60 border border-slate-100 shadow-sm hover:shadow-md hover:border-brand-200 transition-all">
+                    <div class="font-serif text-3xl font-extrabold text-brand-500 mb-1">98%</div>
+                    <div class="text-xs sm:text-sm text-slate-600 font-semibold">Học Viên Cảm Thấy Hứng Thú</div>
+                </div>
+                <div class="p-4 rounded-xl bg-white/60 border border-slate-100 shadow-sm hover:shadow-md hover:border-brand-200 transition-all">
+                    <div class="font-serif text-3xl font-extrabold text-brand-500 mb-1">100%</div>
+                    <div class="text-xs sm:text-sm text-slate-600 font-semibold">Tư Liệu Chuẩn Khảo Cổ</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. SECTION: VẤN ĐỀ (PAIN POINTS) -->
+    <section id="problems" class="py-20 bg-slate-100/70 relative border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-bold text-brand-600 uppercase tracking-widest bg-brand-50 px-3.5 py-1.5 rounded-full border border-brand-200">Thách Thức Người Học</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-black text-slate-900 mt-4 mb-4">Tại Sao Việc Học Lịch Sử Lại Trở Nên Khô Khan?</h2>
+                <p class="text-slate-600 text-sm sm:text-base">Hầu hết người học đều gặp phải những rào cản dưới đây khiến tri thức lịch sử khó tiếp thu và nhanh quên.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Pain Card 1 -->
+                <div class="bg-white p-8 rounded-2xl border border-slate-200 hover:border-brand-500 hover:shadow-xl transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-50 text-brand-500 flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                        <i class="fa-solid fa-calendar-xmark"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-500 transition-colors">Học Vẹt & Quá Nhiều Ngày Tháng</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        <comment-tag id="1">Nhớ hàng loạt mốc con số ngày tháng năm một cách máy móc mà không hiểu được bối cảnh nguyên nhân - kết quả phía sau.</comment-tag id="1" text="Mô tả nỗi đau này có thể tác động mạnh hơn tới cảm xúc người đọc nếu diễn đạt theo hướng: 'Bị quá tải bởi hàng loạt mốc thời gian khô khan, khiến người học chóng quên và không nắm được bản chất nguyên nhân - kết quả của từng sự kiện.'" type="suggestion">
+                    </p>
+                </div>
+
+                <!-- Pain Card 2 -->
+                <div class="bg-white p-8 rounded-2xl border border-slate-200 hover:border-brand-500 hover:shadow-xl transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-50 text-brand-500 flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                        <i class="fa-solid fa-image"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-500 transition-colors">Thiếu Hình Ảnh & Minh Họa</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Khó hình dung được quy mô các trận đánh, chiến thuật gọng kìm hay hình thái kinh tế - xã hội các triều đại cổ đại.
+                    </p>
+                </div>
+
+                <!-- Pain Card 3 -->
+                <div class="bg-white p-8 rounded-2xl border border-slate-200 hover:border-brand-500 hover:shadow-xl transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-50 text-brand-500 flex items-center justify-center text-2xl mb-6 group-hover:bg-brand-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                        <i class="fa-solid fa-puzzle-piece"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-500 transition-colors">Rời Rạc & Mất Bức Tranh Tổng Thể</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Không nắm được sự tương quan giữa lịch sử Việt Nam và dòng chảy lịch sử thế giới trong cùng một mốc thời gian.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. SECTION: GIẢI PHÁP (SOLUTIONS / FEATURES) -->
+    <section id="solutions" class="py-20 bg-white relative border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-bold text-brand-600 uppercase tracking-widest bg-brand-50 px-3.5 py-1.5 rounded-full border border-brand-200">Phương Pháp Đột Phá</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-black text-slate-900 mt-4 mb-4">Sử Việt Hùng Cường Giải Quyết Vấn Đề Như Thế Nào?</h2>
+                <p class="text-slate-600 text-sm sm:text-base">Chúng tôi biến các bài học lịch sử thành một hành trình khám phá đầy hấp dẫn, dễ nhớ và sâu sắc.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Solution 1 -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-brand-500 hover:bg-white hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-brand-500 text-white flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <h3 class="font-serif text-lg font-bold text-slate-900 mb-2 group-hover:text-brand-500 transition-colors">Tư Duy Trận Đánh Trực Quan</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Mô phỏng vị trí địa lý, hướng tấn công, kế hoạch hỏa công và thủy chiến kiệt xuất của các danh tướng.
+                    </p>
+                </div>
+
+                <!-- Solution 2 -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-brand-500 hover:bg-white hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-brand-500 text-white flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                        <i class="fa-solid fa-timeline"></i>
+                    </div>
+                    <h3 class="font-serif text-lg font-bold text-slate-900 mb-2 group-hover:text-brand-500 transition-colors">Dòng Thời Gian Tương Tác</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Hệ thống trục thời gian so sánh song song các triều đại Việt Nam và biến cố lớn trên thế giới từ TCN đến SCN.
+                    </p>
+                </div>
+
+                <!-- Solution 3 -->
+                <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-brand-500 hover:bg-white hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-12 h-12 rounded-xl bg-brand-500 text-white flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <h3 class="font-serif text-lg font-bold text-slate-900 mb-2 group-hover:text-brand-500 transition-colors">Luyện Tập Trắc Nghiệm Thông Minh</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Hệ thống câu hỏi trắc nghiệm có phản hồi đáp án tức thì và lời giải thích chi tiết giúp ghi nhớ tự nhiên.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: SỰ KIỆN LỊCH SỬ (FEATURED EVENTS) -->
+    <section id="events" class="py-20 bg-slate-50 relative border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <div class="text-brand-600 font-bold text-xs tracking-wider uppercase mb-2">Kho Tàng Tri Thức Nhân Loại</div>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-black text-slate-900">Sự Kiện Lịch Sử Việt Nam & Thế Giới</h2>
+                </div>
+                <!-- Filter Buttons -->
+                <div id="eventFilters" class="flex flex-wrap gap-2 mt-6 md:mt-0">
+                    <button data-filter="all" class="btn-theme-change filter-btn active px-4 py-2 rounded-lg text-xs sm:text-sm font-bold bg-brand-500 text-white shadow-sm transition-all">Tất Cả</button>
+                    <button data-filter="truoc-cn" class="btn-theme-change filter-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-white text-slate-700 hover:bg-slate-100 border border-slate-300 transition-all">Trước Công Nguyên (TCN)</button>
+                    <button data-filter="sau-cn" class="btn-theme-change filter-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-white text-slate-700 hover:bg-slate-100 border border-slate-300 transition-all">Sau Công Nguyên (SCN)</button>
+                    <button data-filter="viet-nam" class="btn-theme-change filter-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-white text-slate-700 hover:bg-slate-100 border border-slate-300 transition-all">Lịch Sử Việt Nam</button>
+                </div>
+            </div>
+
+            <!-- Events Grid -->
+            <div id="eventsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Event cards rendered via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: TRẬN CHIẾN NỔI TIẾNG (FAMOUS BATTLES) -->
+    <section id="battles" class="py-20 bg-white relative border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <div class="text-brand-600 font-bold text-xs tracking-wider uppercase mb-2">Nghệ Thuật Quân Sự & Chiến Thuật</div>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-black text-slate-900">Những Trận Chiến Kinh Điển Vĩ Đại</h2>
+                </div>
+                <!-- Battle Category Filter -->
+                <div id="battleFilters" class="flex flex-wrap gap-2 mt-6 md:mt-0">
+                    <button data-battle-filter="all" class="btn-theme-change battle-filter-btn active px-4 py-2 rounded-lg text-xs sm:text-sm font-bold bg-brand-500 text-white shadow-sm transition-all">Tất Cả</button>
+                    <button data-battle-filter="vietnam" class="btn-theme-change battle-filter-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-white text-slate-700 hover:bg-slate-100 border border-slate-300 transition-all">Việt Nam</button>
+                    <button data-battle-filter="world" class="btn-theme-change battle-filter-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-white text-slate-700 hover:bg-slate-100 border border-slate-300 transition-all">Thế Giới</button>
+                </div>
+            </div>
+
+            <!-- Battles Grid -->
+            <div id="battlesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Battle cards rendered dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: DÒNG THỜI GIAN (INTERACTIVE TIMELINE) -->
+    <section id="timeline" class="py-20 bg-slate-50 relative border-t border-slate-200">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <div class="text-brand-600 font-bold text-xs tracking-wider uppercase mb-2">Hành Trình Qua Các Kỷ Nguyên</div>
+                <h2 class="font-serif text-3xl sm:text-4xl font-black text-slate-900">Dòng Thời Gian Lịch Sử</h2>
+            </div>
+
+            <div class="relative border-l-2 border-brand-500 ml-4 md:ml-0 md:left-1/2 -translate-x-1/2 space-y-12">
+                <!-- Timeline Item 1 -->
+                <div class="relative pl-8 md:pl-0 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-brand-500 border-4 border-white group-hover:scale-125 transition-transform shadow-sm"></div>
+                    <div class="md:w-1/2 md:pr-12 md:text-right md:ml-auto">
+                        <span class="inline-block px-3 py-1 rounded bg-brand-50 text-brand-700 text-xs font-bold mb-2 border border-brand-200">2560 TCN</span>
+                        <h3 class="font-serif text-xl font-bold text-slate-900 mb-2 group-hover:text-brand-500 transition-colors">Xây Dựng Đại Kim Tự Tháp Giza</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                            Kỳ quan cổ đại duy nhất còn tồn tại đến ngày nay, minh chứng cho trí tuệ vượt bậc của nền văn minh Ai Cập TCN.
+                        </p>
+                        <button onclick="showTimelineDetail('giza')" class="text-xs text-brand-600 hover:underline font-bold">Xem chi tiết <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="relative pl-8 md:pl-0 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-brand-500 border-4 border-white group-hover:scale-125 transition-transform shadow-sm"></div>
+                    <div class="md:w-1/2 md:pl-12 md:ml-1/2">
+                        <span class="inline-block px-3 py-1 rounded bg-brand-50 text-brand-700 text-xs font-bold mb-2 border border-brand-200">Năm 27 TCN</span>
+                        <h3 class="font-serif text-xl font-bold text-slate-900 mb-2 group-hover:text-brand-500 transition-colors">Đế Quốc La Mã Thành Lập</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                            Augustus trở thành Hoàng đế đầu tiên, mở ra thời kỳ hòa bình Pax Romana và đặt nền móng cho luật pháp Châu Âu.
+                        </p>
+                        <button onclick="showTimelineDetail('roma')" class="text-xs text-brand-600 hover:underline font-bold">Xem chi tiết <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 3 -->
+                <div class="relative pl-8 md:pl-0 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-brand-500 border-4 border-white group-hover:scale-125 transition-transform shadow-sm"></div>
+                    <div class="md:w-1/2 md:pr-12 md:text-right md:ml-auto">
+                        <span class="inline-block px-3 py-1 rounded bg-brand-50 text-brand-700 text-xs font-bold mb-2 border border-brand-200">Năm 938 SCN</span>
+                        <h3 class="font-serif text-xl font-bold text-slate-900 mb-2 group-hover:text-brand-500 transition-colors">Chiến Thắng Bạch Đằng - Ngô Quyền</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                            Chấm dứt hơn 1000 năm Bắc thuộc, khẳng định nền độc lập tự chủ lâu dài cho dân tộc Việt Nam.
+                        </p>
+                        <button onclick="showTimelineDetail('bach-dang')" class="text-xs text-brand-600 hover:underline font-bold">Xem chi tiết <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 4 -->
+                <div class="relative pl-8 md:pl-0 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-brand-500 border-4 border-white group-hover:scale-125 transition-transform shadow-sm"></div>
+                    <div class="md:w-1/2 md:pl-12 md:ml-1/2">
+                        <span class="inline-block px-3 py-1 rounded bg-brand-50 text-brand-700 text-xs font-bold mb-2 border border-brand-200">Năm 1789 SCN</span>
+                        <h3 class="font-serif text-xl font-bold text-slate-900 mb-2 group-hover:text-brand-500 transition-colors">Cách Mạng Pháp Bùng Nổ</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                            Khẩu hiệu "Tự do - Bình đẳng - Bác ái" lan rộng khắp thế giới, đánh dấu sự sụp đổ của chế độ phong kiến tại Châu Âu.
+                        </p>
+                        <button onclick="showTimelineDetail('french-rev')" class="text-xs text-brand-600 hover:underline font-bold">Xem chi tiết <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 5 -->
+                <div class="relative pl-8 md:pl-0 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-brand-500 border-4 border-white group-hover:scale-125 transition-transform shadow-sm"></div>
+                    <div class="md:w-1/2 md:pr-12 md:text-right md:ml-auto">
+                        <span class="inline-block px-3 py-1 rounded bg-brand-50 text-brand-700 text-xs font-bold mb-2 border border-brand-200">30/04/1975 SCN</span>
+                        <h3 class="font-serif text-xl font-bold text-slate-900 mb-2 group-hover:text-brand-500 transition-colors">Giải Phóng Hoàn Toàn Miền Nam</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-3">
+                            Kết thúc Chiến dịch Hồ Chí Minh vĩ đại, thu giang sơn Việt Nam về một mối, mở ra kỷ nguyên hòa bình thống nhất.
+                        </p>
+                        <button onclick="showTimelineDetail('30-4')" class="text-xs text-brand-600 hover:underline font-bold">Xem chi tiết <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: KHÓA HỌC / CHƯƠNG TRÌNH HỌC -->
+    <section id="courses" class="py-20 bg-white border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <div class="text-brand-600 font-bold text-xs tracking-wider uppercase mb-2">Chương Trình Học Tập</div>
+                <h2 class="font-serif text-3xl sm:text-4xl font-black text-slate-900">Các Khóa Học Lịch Sử Chuyên Sâu</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Course Card 1 -->
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 hover:border-brand-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fa-solid fa-monument"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-500 transition-colors">Lịch Sử Thế Giới Cổ Đại (TCN)</h3>
+                        <p class="text-slate-600 text-sm mb-6 leading-relaxed">
+                            <comment-tag id="2">Khám phá Ai Cập, Lưỡng Hà, Hy Lạp và La Mã Cổ Đại. Hiểu rõ sự ra đời của các nền văn minh đầu tiên trên Trái Đất.</comment-tag id="2" text="Mô tả khóa học sẽ lôi cuốn hơn nếu tập trung vào giá trị đầu ra của học viên: 'Khám phá nguồn gốc các nền văn minh lớn như Ai Cập, Lưỡng Hà, Hy Lạp và La Mã. Nắm trọn tư duy lịch sử cổ đại và mối liên hệ với xã hội hiện đại.'" type="suggestion">
+                        </p>
+                    </div>
+                    <div>
+                        <ul class="text-xs text-slate-600 space-y-2 mb-6 border-t border-slate-100 pt-4">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-500"></i> Bản đồ văn minh tương tác</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-500"></i> 100+ tư liệu khảo cổ chuẩn xác</li>
+                        </ul>
+                        <button class="btn-theme-change w-full py-3 rounded-xl bg-slate-100 hover:bg-brand-500 hover:text-white text-slate-800 font-bold text-sm transition-colors duration-300">
+                            Tham Gia Học
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Course Card 2 -->
+                <div class="bg-white rounded-2xl border-2 border-brand-500 p-6 relative flex flex-col justify-between brand-glow group">
+                    <div class="absolute -top-3 right-6 bg-brand-500 text-white font-bold text-[10px] uppercase px-3 py-1 rounded-full shadow-sm">Nổi Bật</div>
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-500 text-white flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-slate-900 mb-3">Lịch Sử Quân Sự Việt Nam</h3>
+                        <p class="text-slate-600 text-sm mb-6 leading-relaxed">
+                            Phân tích chuyên sâu nghệ thuật chiến tranh nhân dân, tư duy quân sự kiệt xuất của Ngô Quyền, Trần Hưng Đạo, Quang Trung & Võ Nguyên Giáp.
+                        </p>
+                    </div>
+                    <div>
+                        <ul class="text-xs text-slate-600 space-y-2 mb-6 border-t border-slate-100 pt-4">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-500"></i> Mô phỏng diễn biến trận đánh</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-500"></i> Bài giảng độc quyền từ chuyên gia</li>
+                        </ul>
+                        <button class="btn-theme-change w-full py-3 rounded-xl bg-brand-500 text-white font-bold text-sm hover:opacity-90 transition-opacity shadow-md">
+                            Tham Gia Học
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Course Card 3 -->
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 hover:border-brand-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <i class="fa-solid fa-earth-americas"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-500 transition-colors">Thế Giới Cận & Hiện Đại</h3>
+                        <p class="text-slate-600 text-sm mb-6 leading-relaxed">
+                            Tìm hiểu về hai cuộc Đại chiến thế giới, Cách mạng công nghiệp và trật tự thế giới đa cực ngày nay.
+                        </p>
+                    </div>
+                    <div>
+                        <ul class="text-xs text-slate-600 space-y-2 mb-6 border-t border-slate-100 pt-4">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-500"></i> Phim tư liệu minh họa phong phú</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand-500"></i> Đề thi & Đáp án giải chi tiết</li>
+                        </ul>
+                        <button class="btn-theme-change w-full py-3 rounded-xl bg-slate-100 hover:bg-brand-500 hover:text-white text-slate-800 font-bold text-sm transition-colors duration-300">
+                            Tham Gia Học
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: MINI QUIZ INTERACTIVE -->
+    <section id="quiz" class="py-20 bg-slate-50 border-t border-slate-200 relative">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-10 shadow-xl relative overflow-hidden">
+                <div class="text-center mb-8">
+                    <span class="text-xs font-bold text-brand-600 uppercase tracking-widest bg-brand-50 px-3.5 py-1.5 rounded-full border border-brand-200">Trắc Nghiệm Nhanh</span>
+                    <h2 class="font-serif text-2xl sm:text-3xl font-bold text-slate-900 mt-3">Kiểm Tra Kiến Thức Lịch Sử</h2>
+                </div>
+
+                <!-- Quiz Container -->
+                <div id="quizContainer">
+                    <div class="flex justify-between items-center text-xs text-slate-500 mb-4 font-semibold">
+                        <span>Câu hỏi <span id="currentQuestionNum" class="text-brand-500 font-bold">1</span>/4</span>
+                        <span>Điểm: <span id="quizScore" class="text-brand-500 font-bold">0</span></span>
+                    </div>
+
+                    <!-- Question Title -->
+                    <h3 id="quizQuestion" class="text-lg sm:text-xl font-semibold text-slate-900 mb-6">
+                        Đang tải câu hỏi...
+                    </h3>
+
+                    <!-- Options -->
+                    <div id="quizOptions" class="space-y-3 mb-6">
+                        <!-- Options generated dynamically -->
+                    </div>
+
+                    <!-- Result Feedback -->
+                    <div id="quizFeedback" class="hidden p-4 rounded-xl text-sm mb-6"></div>
+
+                    <!-- Next Button -->
+                    <button id="nextQuizBtn" onclick="nextQuestion()" class="btn-theme-change hidden w-full py-3 rounded-xl bg-brand-500 text-white font-bold hover:opacity-90 transition-opacity shadow-md">
+                        Câu Tiếp Theo <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SECTION: MINH CHỨNG (PROOF / TESTIMONIALS & METRICS) -->
+    <section id="proof" class="py-20 bg-slate-900 text-white relative overflow-hidden border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-bold text-gold-400 uppercase tracking-widest bg-slate-800 px-3.5 py-1.5 rounded-full border border-slate-700">Hiệu Quả Thực Tế</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-black text-white mt-4 mb-4">Cộng Đồng Nói Gì Về Chúng Tôi?</h2>
+                <p class="text-slate-400 text-sm sm:text-base">Hàng ngàn học sinh, sinh viên và thầy cô đã thay đổi hoàn toàn tư duy học môn Sử.</p>
+            </div>
+
+            <!-- Testimonials Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <!-- Review 1 -->
+                <div class="bg-slate-800/80 border border-slate-700 p-6 rounded-2xl hover:border-brand-500 transition-all duration-300">
+                    <div class="flex items-center gap-1 text-gold-400 mb-4">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-6 italic">
+                        "Nhờ có sơ đồ diễn biến trận Bạch Đằng 938 mà em hiểu ngay lập tức cách Ngô Quyền cắm cọc gỗ bọc sắt. Nhớ lâu hơn hẳn so với việc học thuộc lòng!"
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-brand-500 flex items-center justify-center font-bold text-white">NV</div>
+                        <div>
+                            <h4 class="font-bold text-sm text-white">Nguyễn Văn Anh</h4>
+                            <span class="text-xs text-slate-400">Học sinh Lớp 12 - Hà Nội</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-slate-800/80 border border-slate-700 p-6 rounded-2xl hover:border-brand-500 transition-all duration-300">
+                    <div class="flex items-center gap-1 text-gold-400 mb-4">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-6 italic">
+                        "Là một giáo viên, tôi thường xuyên dùng giao diện Sử Việt Hùng Cường làm giáo án trình chiếu. Học sinh tham gia phát biểu sôi nổi hơn hẳn."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-brand-500 flex items-center justify-center font-bold text-white">TH</div>
+                        <div>
+                            <h4 class="font-bold text-sm text-white">Cô Trần Thị Hoa</h4>
+                            <span class="text-xs text-slate-400">Giáo viên Lịch Sử THPT</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-slate-800/80 border border-slate-700 p-6 rounded-2xl hover:border-brand-500 transition-all duration-300">
+                    <div class="flex items-center gap-1 text-gold-400 mb-4">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-6 italic">
+                        "Nền tảng tuyệt vời nhất cho người yêu lịch sử! Tính năng so sánh lịch sử Việt Nam với các nền văn minh thế giới cùng thời giúp mình có cái nhìn rất tổng quan."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-brand-500 flex items-center justify-center font-bold text-white">LM</div>
+                        <div>
+                            <h4 class="font-bold text-sm text-white">Lê Minh Tuấn</h4>
+                            <span class="text-xs text-slate-400">Nghiên cứu sinh Lịch Sử</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. SECTION: FAQ (CÂU HỎI THƯỜNG GẶP) -->
+    <section id="faq" class="py-20 bg-slate-50 relative border-t border-slate-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-xs font-bold text-brand-600 uppercase tracking-widest bg-brand-50 px-3.5 py-1.5 rounded-full border border-brand-200">Giải Đáp Thắc Mắc</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-black text-slate-900 mt-4 mb-4">Câu Hỏi Thường Gặp (FAQ)</h2>
+                <p class="text-slate-600 text-sm sm:text-base">Giải đáp các câu hỏi bạn có thể băn khoăn khi trải nghiệm nền tảng.</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ 1 -->
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden transition-all duration-300">
+                    <button onclick="toggleFaq('faq1')" class="w-full text-left p-6 font-serif font-bold text-base sm:text-lg text-slate-900 flex justify-between items-center hover:text-brand-500 transition-colors">
+                        <span>Nền tảng này dành cho đối tượng nào?</span>
+                        <i id="icon-faq1" class="fa-solid fa-chevron-down text-brand-500 transition-transform duration-300"></i>
+                    </button>
+                    <div id="faq1" class="hidden px-6 pb-6 text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-4">
+                        <comment-tag id="3">Sử Việt Hùng Cường phù hợp cho học sinh THCS, THPT ôn thi, sinh viên, giáo viên sử dụng làm tư liệu giảng dạy và tất cả những ai có niềm đam mê tìm hiểu lịch sử Việt Nam & Thế giới.</comment-tag id="3" text="Nội dung câu trả lời nên nhấn mạnh thêm về các lợi ích cụ thể: 'Nền tảng được thiết kế cho học sinh THCS, THPT phục vụ ôn thi trực quan, giáo viên minh họa giáo án, cũng như bất kỳ ai muốn khám phá lịch sử qua sơ đồ và góc nhìn chiến thuật sinh động.'" type="suggestion">
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden transition-all duration-300">
+                    <button onclick="toggleFaq('faq2')" class="w-full text-left p-6 font-serif font-bold text-base sm:text-lg text-slate-900 flex justify-between items-center hover:text-brand-500 transition-colors">
+                        <span>Nguồn tư liệu trên website có đảm bảo độ chính xác không?</span>
+                        <i id="icon-faq2" class="fa-solid fa-chevron-down text-brand-500 transition-transform duration-300"></i>
+                    </button>
+                    <div id="faq2" class="hidden px-6 pb-6 text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-4">
+                        Toàn bộ nội dung đều được biên soạn dựa trên các nguồn sử liệu chính thống như Đại Việt Sử Ký Toàn Thư, Việt Nam Sử Lược và đối chiếu tài liệu kiểm chứng quốc tế.
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden transition-all duration-300">
+                    <button onclick="toggleFaq('faq3')" class="w-full text-left p-6 font-serif font-bold text-base sm:text-lg text-slate-900 flex justify-between items-center hover:text-brand-500 transition-colors">
+                        <span>Tôi có thể học và trải nghiệm miễn phí không?</span>
+                        <i id="icon-faq3" class="fa-solid fa-chevron-down text-brand-500 transition-transform duration-300"></i>
+                    </button>
+                    <div id="faq3" class="hidden px-6 pb-6 text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-4">
+                        Có! Bạn có thể tra cứu dòng thời gian, xem chi tiết các trận chiến kinh điển và luyện tập phần trắc nghiệm hoàn toàn miễn phí.
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden transition-all duration-300">
+                    <button onclick="toggleFaq('faq4')" class="w-full text-left p-6 font-serif font-bold text-base sm:text-lg text-slate-900 flex justify-between items-center hover:text-brand-500 transition-colors">
+                        <span>Làm sao để tìm kiếm một sự kiện lịch sử nhanh chóng?</span>
+                        <i id="icon-faq4" class="fa-solid fa-chevron-down text-brand-500 transition-transform duration-300"></i>
+                    </button>
+                    <div id="faq4" class="hidden px-6 pb-6 text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-4">
+                        Bạn chỉ cần bấm vào biểu tượng Kính Lúp ở góc trên bên phải thanh Menu và nhập từ khóa (ví dụ: Điện Biên Phủ, Ngô Quyền, Giza...) để xem ngay kết quả.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Detail cho Sự kiện & Timeline -->
+    <div id="detailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white border border-slate-200 w-full max-w-2xl rounded-2xl p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto shadow-2xl">
+            <button onclick="closeModal('detailModal')" class="absolute top-4 right-4 text-slate-400 hover:text-brand-500 text-xl transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modalContent">
+                <!-- Nội dung modal đổ từ JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Search -->
+    <div id="searchModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-start justify-center pt-20 p-4">
+        <div class="bg-white border border-slate-200 w-full max-w-xl rounded-2xl p-6 relative shadow-2xl">
+            <div class="flex items-center gap-3 border-b border-slate-200 pb-4 mb-4">
+                <i class="fa-solid fa-magnifying-glass text-brand-500 text-lg"></i>
+                <input type="text" id="searchInput" onkeyup="handleSearch()" placeholder="Nhập tên sự kiện (vd: Kim Tự Tháp, Điện Biên Phủ, Roma...)" class="bg-transparent w-full text-slate-900 focus:outline-none text-base">
+                <button onclick="closeModal('searchModal')" class="text-slate-400 hover:text-brand-500">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="searchResults" class="space-y-3 max-h-60 overflow-y-auto text-sm">
+                <p class="text-slate-500 text-center py-4">Nhập từ khóa để bắt đầu tìm kiếm...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. SECTION: FOOTER -->
+    <footer class="bg-slate-950 text-slate-400 text-sm py-16 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <!-- Col 1 -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-brand-500 flex items-center justify-center text-white font-bold font-serif text-xl shadow-md">S</div>
+                        <span class="font-serif text-lg font-black text-white tracking-wider">SỬ VIỆT HÙNG CƯỜNG</span>
+                    </div>
+                    <p class="text-xs leading-relaxed text-slate-400">
+                        Nền tảng học tập và tra cứu Lịch sử Việt Nam & Thế giới từ Cổ đại Trước Công Nguyên đến Hiện Đại.
+                    </p>
+                </div>
+
+                <!-- Col 2 -->
+                <div>
+                    <h4 class="font-serif font-bold text-white mb-4 text-base">Liên Kết Nhanh</h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="#hero" class="hover:text-brand-500 transition-colors duration-200">Trang Chủ</a></li>
+                        <li><a href="#events" class="hover:text-brand-500 transition-colors duration-200">Sự Kiện Lịch Sử</a></li>
+                        <li><a href="#battles" class="hover:text-brand-500 transition-colors duration-200">Trận Chiến Kinh Điển</a></li>
+                        <li><a href="#timeline" class="hover:text-brand-500 transition-colors duration-200">Dòng Thời Gian TCN/SCN</a></li>
+                        <li><a href="#quiz" class="hover:text-brand-500 transition-colors duration-200">Luyện Trắc Nghiệm</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3 -->
+                <div>
+                    <h4 class="font-serif font-bold text-white mb-4 text-base">Mốc Lịch Sử Tiêu Biểu</h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="#" class="hover:text-brand-500 transition-colors duration-200">Kim Tự Tháp Giza (2560 TCN)</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition-colors duration-200">Chiến Thắng Bạch Đằng (938 SCN)</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition-colors duration-200">Ngọc Hồi - Đống Đa (1789)</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition-colors duration-200">Đại Thắng Mùa Xuân 1975</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4 -->
+                <div>
+                    <h4 class="font-serif font-bold text-white mb-4 text-base">Đăng Ký Bản Tin</h4>
+                    <p class="text-xs text-slate-400 mb-4 leading-relaxed">Nhận các bài phân tích lịch sử hay mỗi tuần.</p>
+                    <form onsubmit="event.preventDefault(); showToast('Cảm ơn bạn đã đăng ký nhận bản tin lịch sử!');" class="space-y-2">
+                        <input type="email" placeholder="Email của bạn..." required class="bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-brand-500 w-full transition-colors">
+                        <button type="submit" class="btn-theme-change w-full bg-brand-500 text-white px-4 py-2.5 rounded-xl font-bold text-xs hover:opacity-90 transition-opacity shadow-md">Đăng Ký Ngay</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-900 pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+                <p>© 2026 Sử Việt Hùng Cường. Tất cả các quyền được bảo lưu.</p>
+                <div class="flex gap-5 text-lg">
+                    <a href="#" class="hover:text-brand-500 transition-colors duration-200"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="hover:text-brand-500 transition-colors duration-200"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="hover:text-brand-500 transition-colors duration-200"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-24 right-6 bg-slate-900 text-white text-sm px-5 py-3 rounded-xl shadow-2xl border border-slate-700 hidden z-50 transition-all duration-300 transform translate-y-2">
+        <span id="toastMsg"></span>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- LOGIC ĐỔI MÀU CHỦ ĐỀ & NÚT BẤM (THEME COLOR SWITCHER) ---
+        const colorPalettes = {
+            red: {
+                50: '#fff1f2', 100: '#ffe4e6', 200: '#fecdd3', 500: '#E31F26', 
+                600: '#c81219', 700: '#a30c12', 800: '#870e13', 900: '#701014',
+                gradient: 'linear-gradient(135deg, #E31F26 0%, #d97706 100%)'
+            },
+            blue: {
+                50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 500: '#2563eb', 
+                600: '#1d4ed8', 700: '#1e40af', 800: '#1e3a8a', 900: '#172554',
+                gradient: 'linear-gradient(135deg, #2563eb 0%, #06b6d4 100%)'
+            },
+            emerald: {
+                50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 500: '#059669', 
+                600: '#047857', 700: '#065f46', 800: '#064e3b', 900: '#022c22',
+                gradient: 'linear-gradient(135deg, #059669 0%, #84cc16 100%)'
+            },
+            purple: {
+                50: '#faf5ff', 100: '#f3e8ff', 200: '#e9d5ff', 500: '#7c3aed', 
+                600: '#6d28d9', 700: '#5b21b6', 800: '#4c1d95', 900: '#2e1065',
+                gradient: 'linear-gradient(135deg, #7c3aed 0%, #ec4899 100%)'
+            },
+            amber: {
+                50: '#fffbeb', 100: '#fef3c7', 200: '#fde68a', 500: '#d97706', 
+                600: '#b45309', 700: '#92400e', 800: '#78350f', 900: '#451a03',
+                gradient: 'linear-gradient(135deg, #d97706 0%, #ef4444 100%)'
+            },
+            teal: {
+                50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 500: '#0d9488', 
+                600: '#0f766e', 700: '#115e59', 800: '#134e4a', 900: '#042f2e',
+                gradient: 'linear-gradient(135deg, #0d9488 0%, #3b82f6 100%)'
+            }
+        };
+
+        function changeTheme(themeName) {
+            const theme = colorPalettes[themeName];
+            if (!theme) return;
+
+            const root = document.documentElement;
+            root.style.setProperty('--brand-50', theme[50]);
+            root.style.setProperty('--brand-100', theme[100]);
+            root.style.setProperty('--brand-200', theme[200]);
+            root.style.setProperty('--brand-500', theme[500]);
+            root.style.setProperty('--brand-600', theme[600]);
+            root.style.setProperty('--brand-700', theme[700]);
+            root.style.setProperty('--brand-800', theme[800]);
+            root.style.setProperty('--brand-900', theme[900]);
+            root.style.setProperty('--brand-gradient', theme.gradient);
+
+            // Re-render active filter buttons to update theme background
+            const activeEventBtn = document.querySelector('#eventFilters .filter-btn.active');
+            if (activeEventBtn) activeEventBtn.style.backgroundColor = theme[500];
+
+            const activeBattleBtn = document.querySelector('#battleFilters .battle-filter-btn.active');
+            if (activeBattleBtn) activeBattleBtn.style.backgroundColor = theme[500];
+
+            showToast(`Đã đổi bảng màu chủ đề và nút bấm sang tông ${themeName.toUpperCase()}!`);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 2500);
+        }
+
+        // --- DỮ LIỆU SỰ KIỆN LỊCH SỬ ---
+        const historyEvents = [
+            {
+                id: 'ev-tcn-1',
+                title: 'Thành Lập Nền Văn Minh Ai Cập & Kim Tự Tháp',
+                category: 'truoc-cn',
+                year: 'Khoảng 2560 TCN',
+                summary: 'Xây dựng Đại Kim Tự Tháp Giza dưới thời Pharaon Khufu, kỳ quan vĩ đại bậc nhất thế giới cổ đại.',
+                content: '<comment-tag id="4">Ai Cập cổ đại là một trong những nền văn minh đầu tiên của nhân loại hình thành dọc sông Nile. Khoảng năm 2560 TCN, Kim Tự Tháp Giza được xây dựng với hơn 2,3 triệu khối đá, thể hiện trình độ toán học, thiên văn và kiến trúc vượt bậc của con người thời kỳ Trước Công Nguyên.</comment-tag id="4" text="Nội dung sự kiện này có thể bổ sung chi tiết về triều đại Vương quốc Cổ (Old Kingdom) và ý nghĩa tín ngưỡng liên quan đến đời sống vĩnh hằng của người Ai Cập để bài học sâu sắc và giàu tư liệu hơn." type="suggestion">',
+                tag: 'Thế Giới TCN',
+                icon: 'fa-monument'
+            },
+            {
+                id: 'ev-tcn-2',
+                title: 'Đế Quốc Ba Tư Xâm Lược Hy Lạp',
+                category: 'truoc-cn',
+                year: 'Năm 480 TCN',
+                summary: 'Trận Thermopylae nổi tiếng với 300 chiến binh Sparta dũng cảm cản bước đại quân Ba Tư.',
+                content: 'Vua Leonidas cùng 300 chiến binh Sparta đã tử chiến tại đèo Thermopylae để chặn đứng hàng vạn quân Ba Tư do Hoàng đế Xerxes chỉ huy. Sự kiện này trở thành biểu tượng bất tử về lòng quả cảm và tinh thần tự do của người Hy Lạp cổ đại.',
+                tag: 'Thế Giới TCN',
+                icon: 'fa-shield'
+            },
+            {
+                id: 'ev-tcn-3',
+                title: 'Thành Lập Nhà Nước An Dương Vương - Âu Lạc',
+                category: 'truoc-cn',
+                year: 'Khoảng 208 TCN',
+                summary: 'An Dương Vương hợp nhất Lạc Việt và Âu Việt, xây dựng thành Cổ Loa độc đáo.',
+                content: 'Thục Phán (An Dương Vương) lập ra nước Âu Lạc, chuyển đô về Cổ Loa (Đông Anh, Hà Nội). Ông cho xây dựng tòa thành ốc kiên cố cùng nỏ liên châu thần công, tạo nên tuyến phòng thủ quân sự kiên cố thời TCN của người Việt cổ.',
+                tag: 'Việt Nam TCN',
+                icon: 'fa-archway'
+            },
+            {
+                id: 'ev-scn-1',
+                title: 'Chiến Thắng Bạch Đằng (938 SCN)',
+                category: 'viet-nam',
+                year: 'Năm 938 SCN',
+                summary: 'Ngô Quyền dùng cọc gỗ bọc sắt đập tan quân Nam Hán, mở ra kỷ nguyên độc lập.',
+                content: 'Ngô Quyền tận dụng thủy triều sông Bạch Đằng và bãi cọc nhọn bọc sắt để tiêu diệt toàn bộ lực lượng xâm lược Nam Hán. Thắng lợi này chính thức khép lại hơn 1000 năm Bắc thuộc cay đắng, mở ra thời kỳ độc lập tự chủ lâu dài.',
+                tag: 'Việt Nam SCN',
+                icon: 'fa-ship'
+            },
+            {
+                id: 'ev-scn-2',
+                title: 'Cách Mạng Công Nghiệp Tại Anh',
+                category: 'sau-cn',
+                year: 'Thế kỷ XVIII (1760 - 1840 SCN)',
+                summary: 'Sự ra đời của động cơ hơi nước làm thay đổi hoàn toàn phương thức sản xuất của nhân loại.',
+                content: 'Nhờ phát minh máy hơi nước của James Watt, loài người chuyển từ lao động thủ công sang sản xuất bằng máy móc. Cuộc cách mạng công nghiệp bùng nổ từ Anh sau đó lan ra toàn Châu Âu và thế giới, định hình nên xã hội hiện đại.',
+                tag: 'Thế Giới SCN',
+                icon: 'fa-industry'
+            },
+            {
+                id: 'ev-scn-3',
+                title: 'Chiến dịch Điện Biên Phủ (1954 SCN)',
+                category: 'viet-nam',
+                year: '13/03 - 07/05/1954 SCN',
+                summary: 'Chiến thắng "Lừng lẫy năm châu, chấn động địa cầu" đánh tan tập đoàn căn cứ điểm của Pháp.',
+                content: 'Dưới sự chỉ huy của Đại tướng Võ Nguyên Giáp, quân và dân ta đã vượt qua vô vàn gian khổ kéo pháo bằng tay, đào giao thông hào siết chặt Điện Biên Phủ, buộc tướng De Castries phải hàng, chấm dứt ách thực dân Pháp ở Đông Dương.',
+                tag: 'Việt Nam SCN',
+                icon: 'fa-person-military-rifle'
+            }
+        ];
+
+        // --- DỮ LIỆU CÁC TRẬN CHIẾN NỔI TIẾNG ---
+        const famousBattles = [
+            {
+                id: 'bt-1',
+                title: 'Trận Cannae (216 TCN)',
+                year: 'Năm 216 TCN',
+                category: 'world',
+                location: 'Cannae, Đông Nam Ý',
+                commanders: 'Hannibal Barca vs Lucius Aemilius Paullus',
+                summary: 'Kiệt tác chiến thuật vây bọc hai sườn đỉnh cao nhất lịch sử quân sự cổ đại của thiên tài Hannibal.',
+                content: '<comment-tag id="5">Trận Cannae thuộc Chiến tranh Punic lần thứ hai. Hannibal chỉ huy quân Carthage kém hơn về số lượng nhưng đã dùng chiến thuật gọng kìm ngoạn mục bẫy toàn bộ 80.000 quân La Mã, tiêu diệt gần 70.000 quân địch. Đây được xem là bài học kinh điển về chiến thuật vây bọc trong các học viện quân sự thế giới.</comment-tag id="5" text="Để tăng chiều sâu phân tích quân sự, bạn có thể nêu rõ điểm mấu chốt của trận đánh: Hannibal cố ý cho hàng quân trung tâm chủ động rút lùi để dụ đội hình La Mã dồn vào sâu, sau đó khép chặt hai sườn kỵ binh để bao vây hoàn toàn đối thủ." type="suggestion">',
+                icon: 'fa-chess-knight'
+            },
+            {
+                id: 'bt-2',
+                title: 'Trận Rạch Gầm - Xoài Mút (1785)',
+                year: '19/01/1785 SCN',
+                category: 'vietnam',
+                location: 'Sông Tiền, Tiền Giang',
+                commanders: 'Nguyễn Huệ (Quang Trung) vs Quân Xiêm - Nguyễn Ánh',
+                summary: 'Trận phục kích đường thủy lớn bậc nhất tiêu diệt 5 vạn quân Xiêm xâm lược.',
+                content: 'Anh hùng dân tộc Nguyễn Huệ khéo léo dụ 5 vạn quân Xiêm vào dòng sông Rạch Gầm - Xoài Mút lúc thủy triều rút. Quân Tây Sơn bất ngờ dùng hỏa công và đại bác bắn phá dữ dội, tiêu diệt gần như toàn bộ quân địch chỉ trong một buổi sáng, đập tan mộng xâm lược của nhà Siam.',
+                icon: 'fa-fire-flame-curved'
+            },
+            {
+                id: 'bt-3',
+                title: 'Trận Waterloo (1815)',
+                year: '18/06/1815 SCN',
+                category: 'world',
+                location: 'Waterloo, Bỉ',
+                commanders: 'Napoleon Bonaparte vs Công tước Wellington & Blücher',
+                summary: 'Trận đánh định mệnh khép lại triều đại Napoleon và thay đổi bản đồ địa chính trị Châu Âu.',
+                content: 'Trận Waterloo đánh dấu sự thất bại hoàn toàn của Hoàng đế Pháp Napoleon Bonaparte trước liên quân Anh - Phổ. Thắng lợi của Công tước Wellington đã kết thúc những cuộc chiến tranh Napoleon kéo dài hàng thập kỷ, lập lại trật tự mới cho Châu Âu.',
+                icon: 'fa-crosshairs'
+            },
+            {
+                id: 'bt-4',
+                title: 'Trận Ngọc Hồi - Đống Đa (1789)',
+                year: 'Đêm mùng 4 - mùng 5 Tết Kỷ Dậu (1789)',
+                category: 'vietnam',
+                location: 'Thăng Long (Hà Nội)',
+                commanders: 'Quang Trung Nguyễn Huệ vs Tôn Sĩ Nghị (Nhà Thanh)',
+                summary: 'Cuộc hành quân thần tốc đánh tan 29 vạn quân Thanh, giải phóng Thăng Long.',
+                content: 'Hoàng đế Quang Trung thực hiện cuộc tiến quân thần tốc từ Phú Xuân ra Bắc, sử dụng tượng binh cùng chiến thuật công đồn táo bạo bằng rơm đẫm nước chắn đạn. Quân Tây Sơn quét sạch 29 vạn quân Thanh khiến Tôn Sĩ Nghị phải chạy tháo chạy về nước.',
+                icon: 'fa-horse'
+            },
+            {
+                id: 'bt-5',
+                title: 'Trận Stalingrad (1942 - 1943)',
+                year: '17/07/1942 - 02/02/1943 SCN',
+                category: 'world',
+                location: 'Stalingrad, Liên Xô',
+                commanders: 'Hồng quân Liên Xô vs Phát xít Đức',
+                summary: 'Trận đẫm máu nhất Chiến tranh Thế giới thứ II, bước ngoặt xoay chuyển cục diện toàn cầu.',
+                content: 'Chiến dịch Stalingrad diễn ra khốc liệt trong từng ngôi nhà, góc phố. Sự kiên cường của Hồng quân Liên Xô cùng chiến dịch gọng kìm "Uranus" đã bao vây và tiêu diệt toàn bộ Tập đoàn quân số 6 của Đức, chấm dứt đà tiến công của Phát xít Đức.',
+                icon: 'fa-bomb'
+            },
+            {
+                id: 'bt-6',
+                title: 'Chiến Dịch Hồ Chí Minh (1975)',
+                year: '26/04 - 30/04/1975 SCN',
+                category: 'vietnam',
+                location: 'Sài Gòn - Gia Định',
+                commanders: 'Bộ Tổng chỉ huy Quân Giải phóng',
+                summary: 'Đại thắng Mùa Xuân 1975 kết thúc 21 năm kháng chiến chống Mỹ cứu nước.',
+                content: 'Với tư tưởng chỉ đạo "Thần tốc, táo bạo, bất ngờ, chắc thắng", 5 cánh quân giải phóng đồng loạt tiến vào Sài Gòn, húc đổ cổng Dinh Độc Lập lúc 11h30 ngày 30/04/1975, hoàn toàn giải phóng miền Nam, thống nhất đất nước.',
+                icon: 'fa-flag'
+            }
+        ];
+
+        // --- NGÂN HÀNG CÂU HỎI TRẮC NGHIỆM ---
+        const questionBank = [
+            {
+                q: "Đại Kim Tự Tháp Giza được xây dựng vào khoảng thời gian nào?",
+                options: ["Khoảng 2560 TCN", "Năm 500 SCN", "Khoảng 100 TCN", "Năm 1500 SCN"],
+                correct: 0,
+                explain: "Kim Tự Tháp Giza được xây dựng vào khoảng năm 2560 Trước Công Nguyên dưới thời Pharaoh Khufu."
+            },
+            {
+                q: "Chiến thắng Bạch Đằng năm 938 SCN do ai chỉ huy?",
+                options: ["Trần Hưng Đạo", "Ngô Quyền", "Lê Lợi", "Quang Trung"],
+                correct: 1,
+                explain: "Ngô Quyền là người chỉ huy trận chiến sông Bạch Đằng năm 938 SCN đánh tan quân Nam Hán."
+            },
+            {
+                q: "Trận phục kích đường thủy Rạch Gầm - Xoài Mút năm 1785 do vị tướng nào chỉ huy?",
+                options: ["Trần Hưng Đạo", "Lê Lợi", "Nguyễn Huệ (Quang Trung)", "Ngô Quyền"],
+                correct: 2,
+                explain: "Nguyễn Huệ đã lập nên chiến thắng vang dội Rạch Gầm - Xoài Mút đập tan 5 vạn quân Xiêm xâm lược."
+            },
+            {
+                q: "Trận đánh nào được coi là bước ngoặt làm xoay chuyển cục diện Chiến tranh thế giới thứ II?",
+                options: ["Trận Waterloo", "Trận Cannae", "Trận Stalingrad", "Trận Normandy"],
+                correct: 2,
+                explain: "Trận Stalingrad (1942-1943) là bước ngoặt lớn làm suy yếu hoàn toàn phe Phát xít."
+            },
+            {
+                q: "Ai là vị Hoàng đế đầu tiên của Đế quốc La Mã thành lập năm 27 TCN?",
+                options: ["Julius Caesar", "Augustus", "Nero", "Trajan"],
+                correct: 1,
+                explain: "Augustus (Octavian) trở thành Hoàng đế đầu tiên của Đế quốc La Mã vào năm 27 TCN."
+            },
+            {
+                q: "Cuộc khởi nghĩa Hai Bà Trưng chống lại ách đô hộ nhà Hán bùng nổ vào năm nào?",
+                options: ["Năm 40 SCN", "Năm 938 SCN", "Năm 208 TCN", "Năm 542 SCN"],
+                correct: 0,
+                explain: "Hai Bà Trưng phất cờ khởi nghĩa tại Hát Môn vào năm 40 SCN."
+            },
+            {
+                q: "Đại tướng nào đã chỉ huy Chiến dịch Điện Biên Phủ lừng lẫy năm 1954?",
+                options: ["Văn Tiến Dũng", "Võ Nguyên Giáp", "Nguyễn Chí Thanh", "Trần Đại Nghĩa"],
+                correct: 1,
+                explain: "Đại tướng Võ Nguyên Giáp là Tổng chỉ huy Chiến dịch Điện Biên Phủ năm 1954."
+            },
+            {
+                q: "Nhà nước Âu Lạc do An Dương Vương thành lập chọn nơi nào làm kinh đô?",
+                options: ["Hoa Lư", "Cổ Loa", "Thăng Long", "Phú Xuân"],
+                correct: 1,
+                explain: "An Dương Vương chuyển đô về Cổ Loa (nay thuộc Đông Anh, Hà Nội) và xây dựng thành Cổ Loa."
+            },
+            {
+                q: "Trận Ngọc Hồi - Đống Đa đánh tan 29 vạn quân xâm lược nào?",
+                options: ["Quân Nam Hán", "Quân Nguyên Mông", "Quân Xiêm", "Quân Thanh"],
+                correct: 3,
+                explain: "Vua Quang Trung lãnh đạo đại quân Tây Sơn đánh tan 29 vạn quân Thanh mùa xuân năm Kỷ Dậu 1789."
+            },
+            {
+                q: "Ai là tác giả của bản 'Bình Ngô Đại Cáo' nổi tiếng trong lịch sử Việt Nam?",
+                options: ["Nguyễn Trãi", "Lê Lợi", "Trần Hưng Đạo", "Nô-sơ-sơ"],
+                correct: 0,
+                explain: "Nguyễn Trãi soạn 'Bình Ngô Đại Cáo' thay lời Lê Lợi tuyên bố kết thúc cuộc kháng chiến chống quân Minh."
+            }
+        ];
+
+        let activeQuizQuestions = [];
+        let currentQIndex = 0;
+        let score = 0;
+
+        // Hàm chọn ngẫu nhiên N câu hỏi từ kho câu hỏi
+        function getRandomQuestions(bank, count = 4) {
+            const shuffled = [...bank].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        // --- RENDER EVENTS ---
+        function renderEvents(filter = 'all') {
+            const container = document.getElementById('eventsGrid');
+            container.innerHTML = '';
+
+            const filtered = filter === 'all' 
+                ? historyEvents 
+                : historyEvents.filter(e => e.category === filter);
+
+            filtered.forEach(ev => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-2xl border border-slate-200 p-6 hover:border-brand-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-bold text-brand-700 bg-brand-50 px-2.5 py-1 rounded border border-brand-200">${ev.year}</span>
+                            <i class="fa-solid ${ev.icon} text-slate-400 group-hover:text-brand-500 transition-colors"></i>
+                        </div>
+                        <h3 class="font-serif text-lg font-bold text-slate-900 mb-2 group-hover:text-brand-500 transition-colors">${ev.title}</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">${ev.summary}</p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-[11px] font-semibold text-slate-400">#${ev.tag}</span>
+                        <button onclick="openEventDetail('${ev.id}')" class="text-xs text-brand-600 hover:underline font-bold flex items-center gap-1">
+                            Chi Tiết <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // --- RENDER BATTLES ---
+        function renderBattles(filter = 'all') {
+            const container = document.getElementById('battlesGrid');
+            container.innerHTML = '';
+
+            const filtered = filter === 'all' 
+                ? famousBattles 
+                : famousBattles.filter(b => b.category === filter);
+
+            filtered.forEach(bt => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-2xl border border-slate-200 p-6 hover:border-brand-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded border border-slate-200"><i class="fa-regular fa-calendar-check mr-1 text-brand-500"></i> ${bt.year}</span>
+                            <i class="fa-solid ${bt.icon} text-brand-500 text-lg group-hover:scale-110 transition-transform"></i>
+                        </div>
+                        <h3 class="font-serif text-lg font-bold text-slate-900 mb-2 group-hover:text-brand-500 transition-colors">${bt.title}</h3>
+                        <p class="text-xs text-slate-500 mb-3"><i class="fa-solid fa-location-dot text-brand-500 mr-1"></i> ${bt.location}</p>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">${bt.summary}</p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-[11px] font-medium text-slate-400 truncate max-w-[150px]"><i class="fa-solid fa-user-shield mr-1"></i> ${bt.commanders}</span>
+                        <button onclick="openBattleDetail('${bt.id}')" class="text-xs text-brand-600 hover:underline font-bold flex items-center gap-1 shrink-0">
+                            Diễn Biến <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // --- FILTER BUTTON LOGIC ---
+        document.querySelectorAll('#eventFilters .filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('#eventFilters .filter-btn').forEach(b => {
+                    b.classList.remove('bg-brand-500', 'text-white', 'active', 'shadow-sm');
+                    b.classList.add('bg-white', 'text-slate-700');
+                    b.style.backgroundColor = '';
+                });
+                e.target.classList.add('bg-brand-500', 'text-white', 'active', 'shadow-sm');
+                e.target.classList.remove('bg-white', 'text-slate-700');
+                
+                renderEvents(e.target.dataset.filter);
+            });
+        });
+
+        document.querySelectorAll('#battleFilters .battle-filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('#battleFilters .battle-filter-btn').forEach(b => {
+                    b.classList.remove('bg-brand-500', 'text-white', 'active', 'shadow-sm');
+                    b.classList.add('bg-white', 'text-slate-700');
+                    b.style.backgroundColor = '';
+                });
+                e.target.classList.add('bg-brand-500', 'text-white', 'active', 'shadow-sm');
+                e.target.classList.remove('bg-white', 'text-slate-700');
+                
+                renderBattles(e.target.dataset.battleFilter);
+            });
+        });
+
+        // --- FAQ TOGGLE LOGIC ---
+        function toggleFaq(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        // --- MODAL FUNCTIONS ---
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function openEventDetail(eventId) {
+            const ev = historyEvents.find(e => e.id === eventId);
+            if (!ev) return;
+
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <span class="text-xs font-bold text-brand-600 uppercase tracking-widest bg-brand-50 px-2 py-0.5 rounded border border-brand-200">${ev.year}</span>
+                <h2 class="font-serif text-2xl sm:text-3xl font-bold text-slate-900 mt-2 mb-4">${ev.title}</h2>
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 text-sm leading-relaxed mb-6">
+                    ${ev.content}
+                </div>
+                <div class="flex items-center justify-between pt-4 border-t border-slate-200 text-xs text-slate-500">
+                    <span>Phân loại: <strong class="text-slate-800">${ev.tag}</strong></span>
+                    <button onclick="closeModal('detailModal')" class="btn-theme-change px-5 py-2 bg-brand-500 text-white font-bold rounded-lg hover:opacity-90 transition-opacity">Đóng</button>
+                </div>
+            `;
+            openModal('detailModal');
+        }
+
+        function openBattleDetail(battleId) {
+            const bt = famousBattles.find(b => b.id === battleId);
+            if (!bt) return;
+
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <div class="flex items-center gap-2 text-brand-600 text-xs font-bold uppercase tracking-widest mb-1">
+                    <i class="fa-solid fa-swords"></i> Chi Tiết Trận Chiến Kinh Điển
+                </div>
+                <h2 class="font-serif text-2xl sm:text-3xl font-bold text-slate-900 mb-2">${bt.title}</h2>
+                <div class="flex flex-wrap gap-3 text-xs mb-4 text-slate-600">
+                    <span class="bg-brand-50 text-brand-700 px-2.5 py-1 rounded border border-brand-200 font-bold">${bt.year}</span>
+                    <span class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded border border-slate-200"><i class="fa-solid fa-location-dot text-brand-500 mr-1"></i> ${bt.location}</span>
+                </div>
+                <div class="mb-4 text-xs bg-slate-100 p-3 rounded-lg border border-slate-200 text-slate-700">
+                    <strong>Chỉ huy các bên:</strong> ${bt.commanders}
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 text-sm leading-relaxed mb-6">
+                    ${bt.content}
+                </div>
+                <div class="text-right">
+                    <button onclick="closeModal('detailModal')" class="btn-theme-change px-5 py-2 bg-brand-500 text-white font-bold text-xs rounded-lg hover:opacity-90 transition-opacity">Đóng</button>
+                </div>
+            `;
+            openModal('detailModal');
+        }
+
+        function showTimelineDetail(type) {
+            const modalContent = document.getElementById('modalContent');
+            let data = {
+                title: "Chi Tiết Sự Kiện",
+                desc: "Thông tin tư liệu đang được cập nhật thêm."
+            };
+
+            if (type === 'giza') {
+                data = {
+                    title: "Kim Tự Tháp Giza (2560 TCN)",
+                    desc: "Được xây dựng như một lăng mộ cho Pharaoh Khufu. Đây là công trình nhân tạo cao nhất thế giới trong suốt hơn 3.800 năm, thể hiện trình độ xây dựng và quy hoạch xuất sắc thời kỳ Trước Công Nguyên."
+                };
+            } else if (type === 'roma') {
+                data = {
+                    title: "Đế Quốc La Mã (27 TCN)",
+                    desc: "Sau sự sụp đổ của Cộng hòa La Mã, Octavian lên ngôi hoàng đế với danh hiệu Augustus. Đế quốc La Mã kiểm soát toàn bộ khu vực Địa Trung Hải và ảnh hưởng sâu rộng tới luật pháp, ngôn ngữ La-tinh và kiến trúc Phương Tây."
+                };
+            } else if (type === 'bach-dang') {
+                data = {
+                    title: "Đại Thắng Bạch Đằng (938 SCN)",
+                    desc: "Ngô Quyền tiêu diệt quân xâm lược Nam Hán do Lưu Hoằng Tháo chỉ huy. Trận đánh chấm dứt hoàn toàn mộng thôn tính của phương Bắc, mở ra kỷ nguyên độc lập tự chủ lâu dài cho dân tộc."
+                };
+            } else if (type === 'french-rev') {
+                data = {
+                    title: "Cách Mạng Pháp (1789 SCN)",
+                    desc: "Sự kiện lật đổ chế độ phong kiến tuyệt đối tại Pháp, ban hành Bản Tuyên ngôn Nhân quyền và Dân quyền, cổ vũ cho phong trào dân chủ trên khắp thế giới."
+                };
+            } else if (type === '30-4') {
+                data = {
+                    title: "Giải Phóng Hoàn Toàn Miền Nam (30/04/1975 SCN)",
+                    desc: "Chiến dịch Hồ Chí Minh toàn thắng, đất nước Việt Nam non sông thu về một mối, mở ra thời kỳ độc lập, thống nhất và đi lên chủ nghĩa xã hội."
+                };
+            }
+
+            modalContent.innerHTML = `
+                <div class="flex items-center gap-2 text-brand-600 text-xs font-bold uppercase tracking-widest mb-2">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Dòng Thời Gian Lịch Sử
+                </div>
+                <h2 class="font-serif text-2xl sm:text-3xl font-bold text-slate-900 mb-4">${data.title}</h2>
+                <p class="text-slate-700 text-sm leading-relaxed mb-6 border-l-4 border-brand-500 pl-4 py-1 bg-slate-50 rounded-r">${data.desc}</p>
+                <div class="text-right">
+                    <button onclick="closeModal('detailModal')" class="btn-theme-change px-5 py-2 bg-brand-500 text-white font-bold text-xs rounded-lg hover:opacity-90 transition-opacity">Đóng</button>
+                </div>
+            `;
+            openModal('detailModal');
+        }
+
+        // --- SEARCH FUNCTIONALITY ---
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const resultsContainer = document.getElementById('searchResults');
+
+            if (!query) {
+                resultsContainer.innerHTML = '<p class="text-slate-500 text-center py-4">Nhập từ khóa để bắt đầu tìm kiếm...</p>';
+                return;
+            }
+
+            const matchedEvents = historyEvents.filter(e => 
+                e.title.toLowerCase().includes(query) || 
+                e.summary.toLowerCase().includes(query) ||
+                e.year.toLowerCase().includes(query)
+            );
+
+            const matchedBattles = famousBattles.filter(b => 
+                b.title.toLowerCase().includes(query) || 
+                b.summary.toLowerCase().includes(query) ||
+                b.location.toLowerCase().includes(query) ||
+                b.commanders.toLowerCase().includes(query)
+            );
+
+            if (matchedEvents.length === 0 && matchedBattles.length === 0) {
+                resultsContainer.innerHTML = '<p class="text-slate-500 text-center py-4">Không tìm thấy sự kiện hay trận chiến phù hợp.</p>';
+                return;
+            }
+
+            let html = '';
+
+            matchedEvents.forEach(m => {
+                html += `
+                    <div onclick="closeModal('searchModal'); openEventDetail('${m.id}')" class="p-3 rounded-lg bg-slate-50 border border-slate-200 hover:border-brand-500 cursor-pointer transition-colors flex justify-between items-center">
+                        <div>
+                            <div class="text-slate-900 font-semibold">${m.title} <span class="text-[10px] bg-brand-50 text-brand-700 px-1.5 py-0.5 rounded ml-2 font-bold">Sự kiện</span></div>
+                            <div class="text-xs text-brand-600 font-bold">${m.year}</div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs text-brand-500"></i>
+                    </div>
+                `;
+            });
+
+            matchedBattles.forEach(b => {
+                html += `
+                    <div onclick="closeModal('searchModal'); openBattleDetail('${b.id}')" class="p-3 rounded-lg bg-slate-50 border border-slate-200 hover:border-brand-500 cursor-pointer transition-colors flex justify-between items-center">
+                        <div>
+                            <div class="text-slate-900 font-semibold">${b.title} <span class="text-[10px] bg-red-100 text-red-700 px-1.5 py-0.5 rounded ml-2 font-bold">Trận chiến</span></div>
+                            <div class="text-xs text-slate-500">${b.year} - ${b.location}</div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs text-brand-500"></i>
+                    </div>
+                `;
+            });
+
+            resultsContainer.innerHTML = html;
+        }
+
+        // --- QUIZ LOGIC ---
+        function loadQuestion() {
+            if (!activeQuizQuestions || activeQuizQuestions.length === 0) {
+                activeQuizQuestions = getRandomQuestions(questionBank, 4);
+            }
+
+            const qData = activeQuizQuestions[currentQIndex];
+            document.getElementById('currentQuestionNum').innerText = currentQIndex + 1;
+            document.getElementById('quizQuestion').innerText = qData.q;
+            
+            const optionsContainer = document.getElementById('quizOptions');
+            optionsContainer.innerHTML = '';
+            
+            document.getElementById('quizFeedback').classList.add('hidden');
+            document.getElementById('nextQuizBtn').classList.add('hidden');
+
+            qData.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left p-4 rounded-xl bg-white border border-slate-200 text-slate-800 text-sm hover:border-brand-500 hover:bg-brand-50/40 transition-all flex items-center gap-3 shadow-sm';
+                btn.innerHTML = `
+                    <span class="w-6 h-6 rounded-full border border-slate-300 flex items-center justify-center text-xs text-slate-500 font-bold">${String.fromCharCode(65 + idx)}</span>
+                    <span class="font-medium">${opt}</span>
+                `;
+                btn.onclick = () => checkAnswer(idx);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIdx) {
+            const qData = activeQuizQuestions[currentQIndex];
+            const feedback = document.getElementById('quizFeedback');
+            const options = document.getElementById('quizOptions').children;
+
+            // Disable all options
+            for (let btn of options) {
+                btn.disabled = true;
+                btn.classList.add('opacity-70', 'cursor-not-allowed');
+            }
+
+            if (selectedIdx === qData.correct) {
+                score += 10;
+                document.getElementById('quizScore').innerText = score;
+                options[selectedIdx].classList.remove('opacity-70');
+                options[selectedIdx].classList.add('bg-emerald-50', 'border-emerald-500', 'text-emerald-800');
+                
+                feedback.className = 'p-4 rounded-xl text-sm mb-6 bg-emerald-50 border border-emerald-300 text-emerald-800';
+                feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-2 text-emerald-600"></i> <strong>Chính xác!</strong> ${qData.explain}`;
+            } else {
+                options[selectedIdx].classList.remove('opacity-70');
+                options[selectedIdx].classList.add('bg-rose-50', 'border-rose-500', 'text-rose-800');
+                
+                options[qData.correct].classList.remove('opacity-70');
+                options[qData.correct].classList.add('bg-emerald-50', 'border-emerald-500', 'text-emerald-800');
+
+                feedback.className = 'p-4 rounded-xl text-sm mb-6 bg-rose-50 border border-rose-300 text-rose-800';
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-2 text-rose-600"></i> <strong>Chưa đúng!</strong> ${qData.explain}`;
+            }
+
+            feedback.classList.remove('hidden');
+            document.getElementById('nextQuizBtn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQIndex++;
+            if (currentQIndex < activeQuizQuestions.length) {
+                loadQuestion();
+            } else {
+                // Done Quiz
+                document.getElementById('quizContainer').innerHTML = `
+                    <div class="text-center py-8">
+                        <div class="w-16 h-16 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center text-3xl mx-auto mb-4 border border-brand-200 shadow-sm">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl font-bold text-slate-900 mb-2">Hoàn Thành Thử Thách!</h3>
+                        <p class="text-slate-600 text-sm mb-6">Bạn đạt được <strong class="text-brand-600 text-xl">${score}</strong> điểm trắc nghiệm lịch sử.</p>
+                        <button onclick="resetQuiz()" class="btn-theme-change px-6 py-3 rounded-xl bg-brand-500 text-white font-bold text-sm hover:opacity-90 transition-opacity shadow-md">
+                            Thử Lại Lần Nữa
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function resetQuiz() {
+            currentQIndex = 0;
+            score = 0;
+            // Chọn ngẫu nhiên 4 câu hỏi mới từ ngân hàng câu hỏi
+            activeQuizQuestions = getRandomQuestions(questionBank, 4);
+
+            // Chèn lại cấu trúc HTML của Quiz Container
+            document.getElementById('quizContainer').innerHTML = `
+                <div class="flex justify-between items-center text-xs text-slate-500 mb-4 font-semibold">
+                    <span>Câu hỏi <span id="currentQuestionNum" class="text-brand-500 font-bold">1</span>/4</span>
+                    <span>Điểm: <span id="quizScore" class="text-brand-500 font-bold">0</span></span>
+                </div>
+                <h3 id="quizQuestion" class="text-lg sm:text-xl font-semibold text-slate-900 mb-6"></h3>
+                <div id="quizOptions" class="space-y-3 mb-6"></div>
+                <div id="quizFeedback" class="hidden p-4 rounded-xl text-sm mb-6"></div>
+                <button id="nextQuizBtn" onclick="nextQuestion()" class="btn-theme-change hidden w-full py-3 rounded-xl bg-brand-500 text-white font-bold hover:opacity-90 transition-opacity shadow-md">
+                    Câu Tiếp Theo <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+            `;
+            // Cập nhật lại điểm về 0 sau khi DOM đã được tạo mới
+            const scoreEl = document.getElementById('quizScore');
+            if (scoreEl) scoreEl.innerText = '0';
+            
+            loadQuestion();
+        }
+
+        // --- MOBILE MENU TOGGLE ---
+        document.getElementById('menuBtn').addEventListener('click', () => {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        });
+
+        // --- INITIALIZATION ---
+        window.onload = function() {
+            renderEvents('all');
+            renderBattles('all');
+            resetQuiz();
+        };
+    </script>
+</body>
+</html>
